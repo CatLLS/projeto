@@ -39,23 +39,31 @@ void modo_manual(){//Livia
 
 int modo_arquivo(char *file){//bea
     int largura, altura;
-    int matriz[altura][largura];
+    char tipo[3];
+    char coment[1000];
     FILE *file;     
 
-    arqv = fopen(file[1], "r");
+    file = fopen(file[1], "r");
 
-    if(arqv == NULL){
+    if(file == NULL){
         printf("Erro ao abrir o arquivo. Arquivo vazio.");
         return 1;
     }
+  
+    fgets(tipo, sizeof(tipo), file);
+    fgets(coment, sizeof(coment), file);
+    fscanf(file, "%d %d", &altura, &largura);
+    int matriz[altura][largura];
 
     for(int i = 0; i <= altura; i++){
         for(int j = 0; j <= largura; j++){
             fscanf(file, "%d", &matriz[i][j]);
         }
     }
-    fclose(file)
+    fclose(file);
     codificar_imagem(altura, largura, matriz);
+
+    return 0;
 }
 
 
